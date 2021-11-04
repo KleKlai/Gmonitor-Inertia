@@ -1,11 +1,13 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\QuestionController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +21,17 @@ use App\Http\Controllers\QuestionController;
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
 // });
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::redirect('/', 'login');
 
@@ -34,9 +45,5 @@ Route::get('/archive/classroom/{classroom}/unarchive', [ClassroomController::cla
 Route::get('/classroom/remove-student/{classroom}/{user}', [ClassroomController::class, 'removeStudent'])->name('unenroll.student');
 Route::get('/open-attendance/{classroom}', [AttendanceController::class, 'attendance'])->name('open.attendance');
 Route::post('/question/ask/{classroom}', [QuestionController::class, 'store'])->name('ask.question');
-
-Route::get('/test', function() {
-    return view('notification');
-});
 
 require __DIR__.'/auth.php';
